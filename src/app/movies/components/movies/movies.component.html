@@ -1,7 +1,7 @@
 <ng-template #emptyList>
   <objectivity-message message="No movies found"></objectivity-message>
 </ng-template>
-
+<objectivity-movies-search [title]="title" (updateQueryParams)="updateQueryParams($event)"></objectivity-movies-search>
 <div *ngIf="movies.length > 0; else emptyList">
   <table mat-table [dataSource]="movies">
     <ng-container matColumnDef="title">
