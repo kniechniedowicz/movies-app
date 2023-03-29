@@ -1,1 +1,19 @@
-<p>movies works!</p>
+<ng-template #emptyList>
+  <objectivity-message message="No movies found"></objectivity-message>
+</ng-template>
+
+<div *ngIf="movies.length > 0; else emptyList">
+  <table mat-table [dataSource]="movies">
+    <ng-container matColumnDef="title">
+      <th mat-header-cell *matHeaderCellDef>Title</th>
+      <td mat-cell *matCellDef="let element"> {{element.title}} </td>
+    </ng-container>
+  
+    <ng-container matColumnDef="rate">
+      <th mat-header-cell *matHeaderCellDef>Rate</th>
+      <td mat-cell *matCellDef="let element"> {{element.rate}} </td>
+    </ng-container>
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+</div>
