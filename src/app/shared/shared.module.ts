@@ -5,10 +5,11 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 import { MessageComponent } from './components/message/message.component';
 import { LoaderComponent } from './components/loader/loader.component';
+import { RatePipe } from './pipes/rate.pipe';
 
 @NgModule({
-  declarations: [MessageComponent, LoaderComponent],
+  declarations: [MessageComponent, LoaderComponent, RatePipe],
   imports: [CommonModule, MatCardModule, MatProgressSpinnerModule],
-  exports: [MessageComponent, LoaderComponent],
+  exports: [MessageComponent, LoaderComponent, RatePipe],
 })
 export class SharedModule {}
