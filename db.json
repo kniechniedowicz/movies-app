@@ -4,6 +4,16 @@
       "id": "a50bed37-05f2-40b4-9bca-cb8bed7e2b15",
       "title": "Test movie",
       "rate": 8.7
+    },
+    {
+      "id": "3488d47f-2429-486a-b54b-ccef38f32c62",
+      "title": "Lord of rings 1",
+      "rate": 10
+    },
+    {
+      "id": "e5f73ab0-2708-49c4-8c73-013d18fd6676",
+      "title": "Lord of rings 2",
+      "rate": 10
     }
   ],
   "users": [
