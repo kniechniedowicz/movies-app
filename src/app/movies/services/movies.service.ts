@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, catchError, of, tap } from 'rxjs';
 import { Movie } from './movie.model';
-import { LoaderService } from 'src/app/shared/services/loader.service';
+import { LoaderService } from '../../core/services/loader/loader.service';
 
 @Injectable()
 export class MoviesService {
