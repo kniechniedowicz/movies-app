@@ -1,11 +1,12 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { BehaviorSubject, catchError, map, of, tap, throwError } from 'rxjs';
+import { BehaviorSubject, catchError, of, tap } from 'rxjs';
 import { Movie } from './movie.model';
+import { LoaderService } from 'src/app/shared/services/loader.service';
 
 @Injectable()
 export class MoviesService {
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private loaderService: LoaderService) {
     this.loadAllMovies();
   }
 
@@ -17,6 +18,7 @@ export class MoviesService {
     this.http
       .get<Movie[]>('/api/movies')
       .pipe(
+        this.loaderService.showLoaderUntilCompleted,
         tap((movies) => {
           this.subject.next(movies);
         }),
