@@ -1,6 +1,12 @@
 :host {
   display: block;
-  height: 100%;
   background-color: #1b1e23;
-  padding: 20px 0;
+}
+
+.filters-container {
+  display: flex;
+  padding: 10px;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  background: #fff;
 }

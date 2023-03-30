@@ -1,8 +1,9 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { map, Subject, switchMap, takeUntil, tap } from 'rxjs';
+import { map, Subject, take, takeUntil, tap } from 'rxjs';
 import { LoaderService } from 'src/app/core/services/loader/loader.service';
 import { Movie } from '../../services/movie.model';
+import { UrlParams } from '../../../../../typings/query-params';
 
 import { MoviesService } from '../../services/movies.service';
 
@@ -18,34 +19,39 @@ export class MoviesComponent implements OnInit, OnDestroy {
     private router: Router,
     private activatedRoute: ActivatedRoute
   ) {}
-  private notifier = new Subject();
+  private notifier$ = new Subject();
 
   displayedColumns: string[] = ['title', 'rate'];
   movies: Movie[];
-  title?: string;
 
   ngOnInit(): void {
     this.activatedRoute.queryParams
       .pipe(
-        takeUntil(this.notifier),
-        map((params) => params['title']),
-        tap((title) => {
-          this.title = title;
-        }),
-        switchMap((title) => this.moviesService.loadMoviesByTitle(title))
+        take(1),
+        map((params) => ({ title: params['title'], _order: params['order'] })),
+        tap((params) => {
+          this.moviesService.updateQueryParams(params);
+        })
       )
       .subscribe();
 
     this.moviesService.movies$
-      .pipe(takeUntil(this.notifier))
+      .pipe(takeUntil(this.notifier$))
       .subscribe((movies) => {
         this.movies = movies;
       });
+
+    this.moviesService.params$
+      .pipe(
+        takeUntil(this.notifier$),
+        tap(({ title, _order }) => {
+          this.updateUrlParams({ title, order: _order });
+        })
+      )
+      .subscribe();
   }
 
-  updateQueryParams(title?: string) {
-    const queryParams = title ? { title } : {};
-
+  updateUrlParams(queryParams: UrlParams) {
     this.router.navigate([], {
       relativeTo: this.activatedRoute,
       queryParams,
@@ -54,7 +60,7 @@ export class MoviesComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.notifier.next(null);
-    this.notifier.complete();
+    this.notifier$.next(null);
+    this.notifier$.complete();
   }
 }

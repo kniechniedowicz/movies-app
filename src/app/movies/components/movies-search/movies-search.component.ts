@@ -1,20 +1,13 @@
-import {
-  Component,
-  OnInit,
-  OnDestroy,
-  Output,
-  EventEmitter,
-  Input,
-} from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
 import {
   debounceTime,
   distinctUntilChanged,
-  filter,
   Subject,
-  switchMap,
   takeUntil,
   tap,
+  map,
+  filter,
 } from 'rxjs';
 import { MoviesService } from '../../services/movies.service';
 
@@ -32,37 +25,42 @@ const DEBOUNCE_TIME = 300;
 export class MoviesSearchComponent implements OnInit, OnDestroy {
   constructor(private moviesService: MoviesService) {}
 
-  @Input()
-  title?: string;
-
-  @Output()
-  updateQueryParams = new EventEmitter<string | undefined>();
-
-  private notifier = new Subject();
+  private notifier$ = new Subject();
 
   form = new FormGroup<SearchForm>({
     title: new FormControl('', { nonNullable: true }),
   });
 
   ngOnInit(): void {
-    this.form.controls.title.setValue(this.title ?? '');
+    this.moviesService.params$
+      .pipe(
+        takeUntil(this.notifier$),
+        map(({ title }) => title),
+        filter((title) => title !== this.form.controls.title.value),
+        tap((title) => {
+          this.form.controls.title.setValue(title ?? '', {
+            emitEvent: false,
+          });
+        })
+      )
+      .subscribe();
+
     this.form.valueChanges
       .pipe(
+        takeUntil(this.notifier$),
         distinctUntilChanged(),
         debounceTime(DEBOUNCE_TIME),
         tap(({ title }) => {
-          this.updateQueryParams.emit(title);
-        }),
-        takeUntil(this.notifier),
-        switchMap(({ title }) => {
-          return this.moviesService.loadMoviesByTitle(title ?? '');
+          this.moviesService.updateQueryParams({
+            title: title ? title : undefined,
+          });
         })
       )
       .subscribe();
   }
 
   ngOnDestroy(): void {
-    this.notifier.next(null);
-    this.notifier.complete();
+    this.notifier$.next(null);
+    this.notifier$.complete();
   }
 }
