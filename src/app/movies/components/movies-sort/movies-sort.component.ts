@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
-import { filter, map, Subject, takeUntil, tap } from 'rxjs';
+import { filter, map, Subject, switchMap, takeUntil, tap } from 'rxjs';
 import { MoviesService } from '../../services/movies.service';
 
 @Component({
@@ -40,7 +40,8 @@ export class MoviesSortComponent implements OnInit, OnDestroy {
           this.moviesService.updateQueryParams({
             _order: order ? order : undefined,
           });
-        })
+        }),
+        switchMap(() => this.moviesService.loadMovies())
       )
       .subscribe();
   }

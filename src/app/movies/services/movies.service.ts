@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, catchError, Observable, of, tap } from 'rxjs';
-import { Movie } from './movie.model';
+import { Movie } from '../../../../typings/movie';
 import { LoaderService } from '../../core/services/loader/loader.service';
 import { QueryParams } from 'typings/query-params';
 import { stringify } from 'qs';
@@ -24,7 +24,7 @@ export class MoviesService {
 
   movies$ = this.subject$.asObservable();
 
-  loadMovies(): void {
+  loadMovies(): Observable<Movie[]> {
     const params = this.paramsSubject$.value;
 
     const url =
@@ -32,23 +32,19 @@ export class MoviesService {
         ? '/api/movies'
         : `/api/movies${stringify(params, { addQueryPrefix: true })}`;
 
-    this.http
-      .get<Movie[]>(url)
-      .pipe(
-        this.loaderService.showLoaderUntilCompleted,
-        tap((movies) => {
-          this.subject$.next(movies);
-        }),
-        catchError((err) => {
-          console.error(err);
-          return of([]);
-        })
-      )
-      .subscribe();
+    return this.http.get<Movie[]>(url).pipe(
+      this.loaderService.showLoaderUntilCompleted,
+      tap((movies) => {
+        this.subject$.next(movies);
+      }),
+      catchError((err) => {
+        console.error(err);
+        return of([]);
+      })
+    );
   }
 
   updateQueryParams(params: Omit<QueryParams, 'sort'>) {
     this.paramsSubject$.next({ ...this.paramsSubject$.value, ...params });
-    this.loadMovies();
   }
 }

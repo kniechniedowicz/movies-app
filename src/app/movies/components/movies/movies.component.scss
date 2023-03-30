@@ -1,6 +1,7 @@
 :host {
   display: block;
   background-color: #1b1e23;
+  max-height: 50%;
 }
 
 .filters-container {
@@ -8,5 +9,8 @@
   padding: 10px;
   justify-content: space-between;
   flex-wrap: wrap;
-  background: #fff;
+}
+
+.movies-container {
+  margin-bottom: 20px;
 }

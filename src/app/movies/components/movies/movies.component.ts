@@ -1,8 +1,8 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { map, Subject, take, takeUntil, tap } from 'rxjs';
+import { map, Subject, switchMap, take, takeUntil, tap } from 'rxjs';
 import { LoaderService } from 'src/app/core/services/loader/loader.service';
-import { Movie } from '../../services/movie.model';
+import { Movie } from '../../../../../typings/movie';
 import { UrlParams } from '../../../../../typings/query-params';
 
 import { MoviesService } from '../../services/movies.service';
@@ -21,8 +21,9 @@ export class MoviesComponent implements OnInit, OnDestroy {
   ) {}
   private notifier$ = new Subject();
 
-  displayedColumns: string[] = ['title', 'rate'];
+  displayedColumns: string[] = ['title', 'rate', 'actions'];
   movies: Movie[];
+  selectedMovie: Movie;
 
   ngOnInit(): void {
     this.activatedRoute.queryParams
@@ -31,7 +32,8 @@ export class MoviesComponent implements OnInit, OnDestroy {
         map((params) => ({ title: params['title'], _order: params['order'] })),
         tap((params) => {
           this.moviesService.updateQueryParams(params);
-        })
+        }),
+        switchMap(() => this.moviesService.loadMovies())
       )
       .subscribe();
 
@@ -57,6 +59,10 @@ export class MoviesComponent implements OnInit, OnDestroy {
       queryParams,
       replaceUrl: true,
     });
+  }
+
+  selectMovie(movie: Movie) {
+    this.selectedMovie = movie;
   }
 
   ngOnDestroy(): void {

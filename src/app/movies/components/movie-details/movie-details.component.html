@@ -1,0 +1,17 @@
+<mat-card>
+  <mat-card-header>
+    <mat-card-title-group>
+      <mat-card-title>{{movie.title}}</mat-card-title>
+      <mat-card-subtitle>Director: {{ movie.director }}</mat-card-subtitle>
+      <mat-card-subtitle>Year: {{ movie.year }}</mat-card-subtitle>
+      <mat-card-subtitle>Duration: {{ movie.duration }} min</mat-card-subtitle>
+      <img [alt]="movie.title" *ngIf="movie.image; else notFoundImage" mat-card-sm-image [src]="movie.image" />
+    </mat-card-title-group>
+  </mat-card-header>
+  <mat-card-content>
+  </mat-card-content>
+</mat-card>
+
+<ng-template #notFoundImage>
+  <img mat-card-sm-image alt="not found" src="https://static.vecteezy.com/system/resources/previews/005/337/799/original/icon-image-not-found-free-vector.jpg" />
+</ng-template>

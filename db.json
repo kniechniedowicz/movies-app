@@ -3,17 +3,36 @@
     {
       "id": "a50bed37-05f2-40b4-9bca-cb8bed7e2b15",
       "title": "Test movie",
-      "rate": 8.7
+      "rate": 8.7,
+      "director": "Woody Allen",
+      "duration": 180,
+      "year": 2021
     },
     {
       "id": "3488d47f-2429-486a-b54b-ccef38f32c62",
-      "title": "Lord of rings 1",
-      "rate": 10
+      "title": "The Lord of the Rings: The Return of the King",
+      "rate": 10,
+      "director": "Peter Robert Jackson",
+      "duration": 253,
+      "year": 2001,
+      "image": "https://m.media-amazon.com/images/I/71sLg08monL._AC_SY741_.jpg"
     },
     {
       "id": "e5f73ab0-2708-49c4-8c73-013d18fd6676",
-      "title": "Lord of rings 2",
-      "rate": 10
+      "title": "The Lord of the Rings: The Two Towers",
+      "rate": 10,
+      "director": "Peter Robert Jackson",
+      "duration": 253,
+      "year": 2002
+    },
+    {
+      "id": "",
+      "title": "The Lord of the Rings: The Return of the King",
+      "rate": 10,
+      "duration": 263,
+      "director": "Peter Robert Jackson",
+      "year": 2003,
+      "image": "https://sm.ign.com/t/ign_ap/screenshot/default/the-lord-of-the-rings-the-return-of-the-king-59b7d7a3775bf_dhkf.960.jpg"
     }
   ],
   "users": [

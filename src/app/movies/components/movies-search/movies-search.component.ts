@@ -8,6 +8,7 @@ import {
   tap,
   map,
   filter,
+  switchMap,
 } from 'rxjs';
 import { MoviesService } from '../../services/movies.service';
 
@@ -54,7 +55,8 @@ export class MoviesSearchComponent implements OnInit, OnDestroy {
           this.moviesService.updateQueryParams({
             title: title ? title : undefined,
           });
-        })
+        }),
+        switchMap(() => this.moviesService.loadMovies())
       )
       .subscribe();
   }
