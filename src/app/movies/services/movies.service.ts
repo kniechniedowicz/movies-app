@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, catchError, Observable, of, tap } from 'rxjs';
-import { Movie } from '../../../../typings/movie';
+import { Movie } from '../../../typings/movie';
 import { LoaderService } from '../../core/services/loader/loader.service';
-import { QueryParams } from 'typings/query-params';
+import { QueryParams } from '../../../typings/query-params';
 import { stringify } from 'qs';
 
 const DEFAULT_PARAMS: QueryParams = {

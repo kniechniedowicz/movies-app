@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { Movie } from 'typings/movie';
+import { Movie } from '../../../../typings/movie';
 
 @Component({
   selector: 'objectivity-movie-details',

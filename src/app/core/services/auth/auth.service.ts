@@ -2,7 +2,7 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, catchError, Observable, tap, throwError } from 'rxjs';
 
-import { AuthData } from '../../../../../typings/user';
+import { AuthData } from '../../../../typings/user';
 import { LoaderService } from '../loader/loader.service';
 import { PersistenceService } from '../persistence/persistence.service';
 

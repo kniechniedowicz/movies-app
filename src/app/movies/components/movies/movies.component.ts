@@ -2,8 +2,8 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { map, Subject, switchMap, take, takeUntil, tap } from 'rxjs';
 import { LoaderService } from 'src/app/core/services/loader/loader.service';
-import { Movie } from '../../../../../typings/movie';
-import { UrlParams } from '../../../../../typings/query-params';
+import { Movie } from '../../../../typings/movie';
+import { UrlParams } from '../../../../typings/query-params';
 
 import { MoviesService } from '../../services/movies.service';
 
