@@ -7,7 +7,7 @@
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "server": " json-server-auth db.json -r routes.json",
+    "server": "json-server-auth db.json -r routes.json",
     "lint": "ng lint"
   },
   "private": true,

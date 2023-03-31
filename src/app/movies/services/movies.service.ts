@@ -12,7 +12,9 @@ const DEFAULT_PARAMS: QueryParams = {
   _order: undefined,
 };
 
-@Injectable()
+@Injectable({
+  providedIn: 'root',
+})
 export class MoviesService {
   constructor(private http: HttpClient, private loaderService: LoaderService) {}
 

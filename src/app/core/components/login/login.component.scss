@@ -1,0 +1,23 @@
+form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #fff;
+  padding: 10px 0;
+  margin: 0 auto;
+  width: 50%;
+  max-width: 400px;
+}
+
+.form-field {
+  position: relative;
+}
+
+.errors {
+  position: absolute;
+  bottom: 0;
+}
+
+.error {
+  color: #ff0000;
+}
