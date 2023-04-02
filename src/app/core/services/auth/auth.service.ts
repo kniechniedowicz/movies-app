@@ -1,12 +1,20 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, catchError, Observable, tap, throwError } from 'rxjs';
+import {
+  BehaviorSubject,
+  catchError,
+  EMPTY,
+  map,
+  Observable,
+  tap,
+  throwError,
+} from 'rxjs';
 
 import { AuthData } from '../../../../typings/user';
 import { LoaderService } from '../loader/loader.service';
 import { PersistenceService } from '../persistence/persistence.service';
 
-const ACCESS_TOKEN_KEY = 'accessToken';
+export const ACCESS_TOKEN_KEY = 'accessToken';
 
 @Injectable({
   providedIn: 'root',
@@ -22,6 +30,10 @@ export class AuthService {
 
   userData$ = this.authSubject$.asObservable();
 
+  isAuthenticated(): Observable<boolean> {
+    return this.userData$.pipe(map(Boolean));
+  }
+
   login(email: string, password: string): Observable<AuthData> {
     return this.http.post<AuthData>('/api/login', { email, password }).pipe(
       this.loaderService.showLoaderUntilCompleted,
@@ -35,7 +47,28 @@ export class AuthService {
         this.authSubject$.next(data);
       }),
       catchError((error: HttpErrorResponse) => {
-        console.error(`AuthService: ${error.error}`, error);
+        console.error(`AuthService login: ${error.error}`, error);
+        return throwError(() => error);
+      })
+    );
+  }
+
+  getUserData(): Observable<AuthData> {
+    const accessToken =
+      this.persistenceService.getDataFromLocalStorage(ACCESS_TOKEN_KEY);
+
+    if (!accessToken) {
+      return EMPTY;
+    }
+
+    return this.http.get<AuthData>('/api/me').pipe(
+      this.loaderService.showLoaderUntilCompleted,
+      tap((authData) => {
+        this.authSubject$.next(authData);
+      }),
+      catchError((error: HttpErrorResponse) => {
+        this.logout();
+        console.error(`AuthService getUserData: ${error.error}`, error);
         return throwError(() => error);
       })
     );

@@ -1,6 +1,8 @@
 <mat-toolbar>
   <nav>
-    <a mat-button routerLink="/movies">Movies</a>
+    <div>
+      <a *ngIf="auth.isAuthenticated() | async" mat-button routerLink="/movies">Movies</a>
+    </div>
     <div>
       <a *ngIf="!(auth.userData$ | async)" mat-button routerLink="/login">Login</a>
       <button *ngIf="auth.userData$ | async" mat-button (click)="logout()">Logout</button>

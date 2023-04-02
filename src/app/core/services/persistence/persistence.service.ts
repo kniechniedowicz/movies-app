@@ -17,14 +17,15 @@ export class PersistenceService {
     }
   }
 
-  getDataFromLocalStorage(key: string) {
+  getDataFromLocalStorage(key: string): string | null {
     try {
-      localStorage.getItem(key);
+      return localStorage.getItem(key);
     } catch (error) {
       console.error(
         'PersistenceService: Error while getting data from local storage',
         error
       );
+      return null;
     }
   }
 

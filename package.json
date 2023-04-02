@@ -7,7 +7,7 @@
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "server": "json-server-auth db.json -r routes.json",
+    "server": "node server.js",
     "lint": "ng lint"
   },
   "private": true,
@@ -24,6 +24,7 @@
     "@angular/router": "^15.2.0",
     "json-server": "^0.17.3",
     "json-server-auth": "^2.1.0",
+    "jsonwebtoken": "^9.0.0",
     "qs": "^6.11.1",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
