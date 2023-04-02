@@ -2,23 +2,19 @@
   <h3>Login</h3>
   <p class="error" *ngIf="error">{{ error }}</p>
   <div class="form-field">
-    <mat-form-field appearance="fill">
+    <mat-form-field subscriptSizing="dynamic" appearance="fill">
       <mat-label>Email</mat-label>
       <input matInput #emailControl="ngModel" [(ngModel)]="email" name="email" required pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" />
+      <mat-error *ngIf="emailControl.errors && emailControl.errors['required']">Email is a required field.</mat-error>
+      <mat-error *ngIf="emailControl.errors && emailControl.errors['pattern']">This is not a valid Email.</mat-error>
     </mat-form-field>
-    <div class="errors" *ngIf="emailControl.touched && emailControl.errors">
-      <span class="error" *ngIf="emailControl.errors['required']">Email is a required field!</span>
-      <span class="error" *ngIf="emailControl.errors['pattern']">This is not a valid Email!!!</span>
-    </div>
   </div>
   <div class="form-field">
-    <mat-form-field appearance="fill">
+    <mat-form-field subscriptSizing="dynamic" appearance="fill">
       <mat-label>Password</mat-label>
-      <input matInput #passwordControl="ngModel" type="password" [(ngModel)]="password" name="passowrd" required />
+      <input matInput #passwordControl="ngModel" type="password" [(ngModel)]="password" name="password" required />
+      <mat-error *ngIf="passwordControl.errors && passwordControl.errors['required']">Password is a required field.</mat-error>
     </mat-form-field>
-    <div class="errors" *ngIf="passwordControl.touched && passwordControl.errors">
-      <span class="error" *ngIf="passwordControl.errors['required']">Passowrd is a required field!</span>
-    </div>
   </div>
   <button [disabled]="form.invalid" type="submit" mat-raised-button color="primary">Login</button>
 </form>

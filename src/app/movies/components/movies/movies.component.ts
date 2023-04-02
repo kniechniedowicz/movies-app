@@ -23,7 +23,7 @@ export class MoviesComponent implements OnInit, OnDestroy {
 
   displayedColumns: string[] = ['title', 'rate', 'actions'];
   movies: Movie[];
-  selectedMovie: Movie;
+  selectedMovie: Movie | null;
 
   ngOnInit(): void {
     this.activatedRoute.queryParams
@@ -63,6 +63,10 @@ export class MoviesComponent implements OnInit, OnDestroy {
 
   selectMovie(movie: Movie) {
     this.selectedMovie = movie;
+  }
+
+  onSearchHandler() {
+    this.selectedMovie = null;
   }
 
   ngOnDestroy(): void {

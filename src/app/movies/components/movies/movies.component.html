@@ -3,7 +3,7 @@
 </ng-template>
 <div class="filters-container">
   <objectivity-movies-sort></objectivity-movies-sort>
-  <objectivity-movies-search></objectivity-movies-search>
+  <objectivity-movies-search (onSearch)="onSearchHandler()"></objectivity-movies-search>
 </div>
 <div class="movies-container" *ngIf="movies.length > 0; else emptyList">
   <table mat-table [dataSource]="movies">

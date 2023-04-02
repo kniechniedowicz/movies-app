@@ -1,4 +1,10 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  OnDestroy,
+  EventEmitter,
+  Output,
+} from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
 import {
   debounceTime,
@@ -28,6 +34,9 @@ export class MoviesSearchComponent implements OnInit, OnDestroy {
 
   private notifier$ = new Subject();
 
+  @Output()
+  onSearch = new EventEmitter();
+
   form = new FormGroup<SearchForm>({
     title: new FormControl('', { nonNullable: true }),
   });
@@ -56,7 +65,10 @@ export class MoviesSearchComponent implements OnInit, OnDestroy {
             title: title ? title : undefined,
           });
         }),
-        switchMap(() => this.moviesService.loadMovies())
+        switchMap(() => this.moviesService.loadMovies()),
+        tap(() => {
+          this.onSearch.emit();
+        })
       )
       .subscribe();
   }
