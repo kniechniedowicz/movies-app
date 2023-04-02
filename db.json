@@ -42,6 +42,13 @@
       "password": "$2a$12$iML/Xg3hQ.d6LO/urxLw0e2Itt9vOldKmQB.KFX53RUuUGVGvwgle",
       "favouriteMovies": [],
       "isAdmin": true
+    },
+    {
+      "id": "b0c2bf8b-3b06-4f61-a6b9-dddeed55bd32",
+      "email": "user@user.com",
+      "password": "$2a$12$XXfcB9eA7lIgxn/FP1zYSuDrOAf7Ln9fDxccos2cZq3SrAYRk4deO",
+      "favouriteMovies": [],
+      "isAdmin": false
     }
   ]
 }

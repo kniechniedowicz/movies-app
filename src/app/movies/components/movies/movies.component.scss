@@ -15,3 +15,18 @@
 .movies-container {
   margin-bottom: 20px;
 }
+
+.new-movie-link {
+  background-color: #fff;
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+
+  a {
+    height: 36px;
+    width: 36px;
+  }
+}

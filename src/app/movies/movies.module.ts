@@ -15,6 +15,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { MoviesSortComponent } from './components/movies-sort/movies-sort.component';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
+import { MatIconModule } from '@angular/material/icon';
 import { MovieDetailsComponent } from './components/movie-details/movie-details.component';
 
 @NgModule({
@@ -26,13 +27,14 @@ import { MovieDetailsComponent } from './components/movie-details/movie-details.
   ],
   imports: [
     CommonModule,
-    MoviesRoutingModule,
     HttpClientModule,
-    MatTableModule,
-    SharedModule,
     ReactiveFormsModule,
-    MatFormFieldModule,
+    MoviesRoutingModule,
+    MatTableModule,
     MatInputModule,
+    MatIconModule,
+    MatFormFieldModule,
+    SharedModule,
     BrowserAnimationsModule,
     MatSelectModule,
     MatButtonModule,
