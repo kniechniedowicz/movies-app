@@ -3,7 +3,7 @@
 </ng-template>
 <div class="filters-container">
   <objectivity-movies-sort></objectivity-movies-sort>
-  <a *objectivityUserPermissions mat-stroked-button color="primary" class="new-movie-link">+ Add new movie</a>
+  <a *objectivityUserPermissions mat-stroked-button color="primary" class="new-movie-link" routerLink="/movies/new">+ Add new movie</a>
   <objectivity-movies-search (onSearch)="onSearchHandler()"></objectivity-movies-search>
 </div>
 <div class="movies-container" *ngIf="movies.length > 0; else emptyList">
@@ -22,7 +22,7 @@
       <td mat-cell *matCellDef="let element">
         <div class="actions">
           <button (click)="selectMovie(element)" mat-flat-button color="primary">Show more</button>
-          <a *objectivityUserPermissions mat-fab aria-label="Edit movie">
+          <a *objectivityUserPermissions mat-fab aria-label="Edit movie" [routerLink]="['/movies', element.id]">
             <mat-icon>edit</mat-icon>
           </a>
         </div>

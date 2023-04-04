@@ -5,6 +5,7 @@ import { Movie } from '../../../typings/movie';
 import { LoaderService } from '../../core/services/loader/loader.service';
 import { QueryParams } from '../../../typings/query-params';
 import { stringify } from 'qs';
+import { v4 as uuidv4 } from 'uuid';
 
 const DEFAULT_PARAMS: QueryParams = {
   _sort: 'rate',
@@ -48,5 +49,32 @@ export class MoviesService {
 
   updateQueryParams(params: Omit<QueryParams, 'sort'>) {
     this.paramsSubject$.next({ ...this.paramsSubject$.value, ...params });
+  }
+
+  createMovie(date: Movie) {
+    const movie = { ...date, id: uuidv4() };
+
+    return this.http.post('/api/movies', movie).pipe(
+      this.loaderService.showLoaderUntilCompleted,
+      tap(() => {
+        this.subject$.next([...this.subject$.value, movie]);
+      })
+    );
+  }
+
+  editMovie(movie: Movie) {
+    return this.http.put(`/api/movies/${movie.id}`, movie).pipe(
+      this.loaderService.showLoaderUntilCompleted,
+      tap(() => {
+        const index = this.subject$.value.findIndex(
+          (item) => item.id === movie.id
+        );
+
+        const left = this.subject$.value.slice(0, index);
+        const right = this.subject$.value.slice(index + 1);
+
+        this.subject$.next([...left, movie, ...right]);
+      })
+    );
   }
 }

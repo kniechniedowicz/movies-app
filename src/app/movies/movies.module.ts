@@ -17,6 +17,12 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
 import { MovieDetailsComponent } from './components/movie-details/movie-details.component';
+import { MovieFormComponent } from './components/movie-form/movie-form.component';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
+import { YearSelectorComponent } from './components/year-selector/year-selector.component';
+import { CreateMovieComponent } from './components/create-movie/create-movie/create-movie.component';
+import { EditMovieComponent } from './components/edit-movie/edit-movie/edit-movie.component';
 
 @NgModule({
   declarations: [
@@ -24,6 +30,10 @@ import { MovieDetailsComponent } from './components/movie-details/movie-details.
     MoviesSearchComponent,
     MoviesSortComponent,
     MovieDetailsComponent,
+    MovieFormComponent,
+    YearSelectorComponent,
+    CreateMovieComponent,
+    EditMovieComponent,
   ],
   imports: [
     CommonModule,
@@ -32,6 +42,7 @@ import { MovieDetailsComponent } from './components/movie-details/movie-details.
     MoviesRoutingModule,
     MatTableModule,
     MatInputModule,
+    MatDatepickerModule,
     MatIconModule,
     MatFormFieldModule,
     SharedModule,
@@ -39,6 +50,7 @@ import { MovieDetailsComponent } from './components/movie-details/movie-details.
     MatSelectModule,
     MatButtonModule,
     MatCardModule,
+    MatNativeDateModule,
   ],
   providers: [MoviesService],
   exports: [MoviesRoutingModule],

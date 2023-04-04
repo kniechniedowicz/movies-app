@@ -1,0 +1,17 @@
+<mat-form-field appearance="outline">
+  <mat-label>Year</mat-label>
+  <input
+    (click)="openDatepicker(datepicker)"
+    (keydown.arrowdown)="openDatepicker(datepicker)"
+    (keydown.enter)="openDatepicker(datepicker)"
+    readonly
+    matInput
+    [matDatepicker]="datepicker"
+    [formControl]="control"
+    [max]="maxDate"
+  />
+  <mat-datepicker-toggle matIconSuffix [for]="datepicker"></mat-datepicker-toggle>
+  <mat-datepicker (yearSelected)="onYearSelected($event, datepicker)" #datepicker startView="multi-year" [touchUi]="false"></mat-datepicker>
+  <mat-error *ngIf="control.errors && control.errors['required']">Year is required.</mat-error>
+  <mat-error *ngIf="control.errors && control.errors['matDatepickerMax']">Year should be equal or less then current year</mat-error>
+</mat-form-field>

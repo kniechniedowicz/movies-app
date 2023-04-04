@@ -20,19 +20,47 @@
     {
       "id": "e5f73ab0-2708-49c4-8c73-013d18fd6676",
       "title": "The Lord of the Rings: The Two Towers",
-      "rate": 10,
-      "director": "Peter Robert Jackson",
+      "rate": 9.7,
       "duration": 253,
+      "director": "Peter Robert Jackson",
+      "image": "",
       "year": 2002
     },
     {
-      "id": "",
+      "id": "3299e855-3a58-407e-93d2-1f16c0a13165",
       "title": "The Lord of the Rings: The Return of the King",
-      "rate": 10,
+      "rate": 9.8,
       "duration": 263,
       "director": "Peter Robert Jackson",
+      "image": "https://sm.ign.com/t/ign_ap/screenshot/default/the-lord-of-the-rings-the-return-of-the-king-59b7d7a3775bf_dhkf.960.jpg",
+      "year": 2003
+    },
+    {
+      "title": "Leon",
+      "rate": 9,
+      "duration": 110,
+      "director": "Luc Besson",
+      "image": "https://upload.wikimedia.org/wikipedia/en/0/03/Leon-poster.jpg",
+      "year": 1994,
+      "id": "9f8f3d25-9247-4c5f-b506-8938eec1e597"
+    },
+    {
+      "title": "Pirates of the Caribbean: The Curse of the Black Pearl",
+      "rate": 9.5,
+      "duration": 110,
+      "director": "Gore Verbinski",
+      "image": "https://upload.wikimedia.org/wikipedia/en/thumb/8/89/Pirates_of_the_Caribbean_-_The_Curse_of_the_Black_Pearl.png/220px-Pirates_of_the_Caribbean_-_The_Curse_of_the_Black_Pearl.png",
       "year": 2003,
-      "image": "https://sm.ign.com/t/ign_ap/screenshot/default/the-lord-of-the-rings-the-return-of-the-king-59b7d7a3775bf_dhkf.960.jpg"
+      "id": "9bfe93fa-3b36-4489-b6bb-06151b2bd519"
+    },
+    {
+      "title": "Pirates of the Caribbean: Dead Man's Chest",
+      "rate": 8,
+      "duration": 150,
+      "director": "Gore Verbinski",
+      "image": "https://upload.wikimedia.org/wikipedia/en/thumb/2/2d/Pirates_of_the_caribbean_2_poster_b.jpg/220px-Pirates_of_the_caribbean_2_poster_b.jpg",
+      "year": 0,
+      "id": "e5e0a8b8-0a21-44f2-a4e8-6f061ccdc95b"
     }
   ],
   "users": [
