@@ -68,15 +68,40 @@
       "id": "d6acd667-f552-4c0e-a0e6-57299dffceb3",
       "email": "admin@user.com",
       "password": "$2a$12$iML/Xg3hQ.d6LO/urxLw0e2Itt9vOldKmQB.KFX53RUuUGVGvwgle",
-      "favouriteMovies": [],
       "isAdmin": true
     },
     {
       "id": "b0c2bf8b-3b06-4f61-a6b9-dddeed55bd32",
       "email": "user@user.com",
       "password": "$2a$12$XXfcB9eA7lIgxn/FP1zYSuDrOAf7Ln9fDxccos2cZq3SrAYRk4deO",
-      "favouriteMovies": [],
       "isAdmin": false
+    }
+  ],
+  "favourites": [
+    {
+      "id": "29250009-6305-406e-a230-1eae42285044",
+      "movieId": "3299e855-3a58-407e-93d2-1f16c0a13165",
+      "userId": "d6acd667-f552-4c0e-a0e6-57299dffceb3"
+    },
+    {
+      "id": "28886f30-3e57-442a-a77c-929c7b9a1479",
+      "movieId": "e5f73ab0-2708-49c4-8c73-013d18fd6676",
+      "userId": "d6acd667-f552-4c0e-a0e6-57299dffceb3"
+    },
+    {
+      "id": "6a41ef11-61a5-4085-946b-565be5c21b99",
+      "movieId": "e5e0a8b8-0a21-44f2-a4e8-6f061ccdc95b",
+      "userId": "b0c2bf8b-3b06-4f61-a6b9-dddeed55bd32"
+    },
+    {
+      "userId": "d6acd667-f552-4c0e-a0e6-57299dffceb3",
+      "movieId": "3488d47f-2429-486a-b54b-ccef38f32c62",
+      "id": "J8GE9lu"
+    },
+    {
+      "userId": "d6acd667-f552-4c0e-a0e6-57299dffceb3",
+      "movieId": "a50bed37-05f2-40b4-9bca-cb8bed7e2b15",
+      "id": "J04-urA"
     }
   ]
 }

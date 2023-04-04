@@ -10,7 +10,7 @@ import {
   throwError,
 } from 'rxjs';
 
-import { AuthData } from '../../../../typings/user';
+import { AuthData, User } from '../../../../typings/user';
 import { LoaderService } from '../loader/loader.service';
 import { PersistenceService } from '../persistence/persistence.service';
 
@@ -53,7 +53,11 @@ export class AuthService {
     );
   }
 
-  getUserData(): Observable<AuthData> {
+  getUser(): User | null {
+    return this.authSubject$.value?.user ?? null;
+  }
+
+  loadUserData(): Observable<AuthData> {
     const accessToken =
       this.persistenceService.getDataFromLocalStorage(ACCESS_TOKEN_KEY);
 
@@ -68,7 +72,7 @@ export class AuthService {
       }),
       catchError((error: HttpErrorResponse) => {
         this.logout();
-        console.error(`AuthService getUserData: ${error.error}`, error);
+        console.error(`AuthService loadUserData: ${error.error}`, error);
         return throwError(() => error);
       })
     );

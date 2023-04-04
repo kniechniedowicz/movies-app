@@ -28,6 +28,14 @@
         </div>
       </td>
     </ng-container>
+    <ng-container matColumnDef="favourites">
+      <th mat-header-cell *matHeaderCellDef></th>
+      <td mat-cell *matCellDef="let element">
+        <button (click)="addToFavourites(element)" mat-icon-button color="warn" [attr.aria-label]="element.isAddedToFavourites ? 'Remove from favourites' : 'Add to favourites'">
+          <mat-icon>{{element.isAddedToFavourites ? 'favorite' : 'favorite_border'}}</mat-icon>
+        </button>
+      </td>
+    </ng-container>
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
     <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
   </table>

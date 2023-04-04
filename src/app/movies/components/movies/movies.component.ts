@@ -2,10 +2,12 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { map, Subject, switchMap, take, takeUntil, tap } from 'rxjs';
 import { LoaderService } from 'src/app/core/services/loader/loader.service';
-import { Movie } from '../../../../typings/movie';
+import { Movie, MovieWithFavourites } from '../../../../typings/movie';
 import { UrlParams } from '../../../../typings/query-params';
 
 import { MoviesService } from '../../services/movies.service';
+import { AuthService } from 'src/app/core/services/auth/auth.service';
+import { FavouritesService } from '../../services/favourites/favourites.service';
 
 @Component({
   selector: 'objectivity-movies',
@@ -17,13 +19,16 @@ export class MoviesComponent implements OnInit, OnDestroy {
     private moviesService: MoviesService,
     public loaderService: LoaderService,
     private router: Router,
+    private auth: AuthService,
+    private favouritesService: FavouritesService,
     private activatedRoute: ActivatedRoute
   ) {}
   private notifier$ = new Subject();
 
-  displayedColumns: string[] = ['title', 'rate', 'actions'];
-  movies: Movie[];
-  selectedMovie: Movie | null;
+  displayedColumns: string[] = ['title', 'rate', 'actions', 'favourites'];
+  movies: MovieWithFavourites[] = [];
+  selectedMovie: Movie | null = null;
+  favourites: string[] = [];
 
   ngOnInit(): void {
     this.activatedRoute.queryParams
@@ -37,10 +42,39 @@ export class MoviesComponent implements OnInit, OnDestroy {
       )
       .subscribe();
 
+    this.auth.userData$
+      .pipe(
+        takeUntil(this.notifier$),
+        tap((authData) => {
+          if (!authData) {
+            return;
+          }
+
+          this.favouritesService.getFavourites(authData.user.id);
+        })
+      )
+      .subscribe();
+
+    this.favouritesService.favourites$
+      .pipe(
+        takeUntil(this.notifier$),
+        map((favourites) => {
+          this.favourites = favourites.map((item) => item.movieId);
+          this.movies = this.moviesService.mergeMoviesWithFavourites(
+            this.movies,
+            this.favourites
+          );
+        })
+      )
+      .subscribe();
+
     this.moviesService.movies$
       .pipe(takeUntil(this.notifier$))
       .subscribe((movies) => {
-        this.movies = movies;
+        this.movies = this.moviesService.mergeMoviesWithFavourites(
+          movies,
+          this.favourites
+        );
       });
 
     this.moviesService.params$
@@ -59,6 +93,20 @@ export class MoviesComponent implements OnInit, OnDestroy {
       queryParams,
       replaceUrl: true,
     });
+  }
+
+  addToFavourites(movie: MovieWithFavourites) {
+    if (movie.isAddedToFavourites) {
+      return;
+    }
+
+    const user = this.auth.getUser();
+
+    if (!user) {
+      return;
+    }
+
+    this.favouritesService.addToFavourites(movie.id, user.id);
   }
 
   selectMovie(movie: Movie) {

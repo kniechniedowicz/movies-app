@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { take } from 'rxjs';
 import { AuthService } from './core/services/auth/auth.service';
 
 @Component({
@@ -13,6 +12,6 @@ export class AppComponent implements OnInit {
   constructor(private authService: AuthService) {}
 
   ngOnInit(): void {
-    this.authService.getUserData().pipe(take(1)).subscribe();
+    this.authService.loadUserData().subscribe();
   }
 }

@@ -1,11 +1,10 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, catchError, Observable, of, tap } from 'rxjs';
-import { Movie } from '../../../typings/movie';
+import { Movie, MovieWithFavourites } from '../../../typings/movie';
 import { LoaderService } from '../../core/services/loader/loader.service';
 import { QueryParams } from '../../../typings/query-params';
 import { stringify } from 'qs';
-import { v4 as uuidv4 } from 'uuid';
 
 const DEFAULT_PARAMS: QueryParams = {
   _sort: 'rate',
@@ -51,12 +50,10 @@ export class MoviesService {
     this.paramsSubject$.next({ ...this.paramsSubject$.value, ...params });
   }
 
-  createMovie(date: Movie) {
-    const movie = { ...date, id: uuidv4() };
-
-    return this.http.post('/api/movies', movie).pipe(
+  createMovie(data: Movie) {
+    return this.http.post<Movie>('/api/movies', data).pipe(
       this.loaderService.showLoaderUntilCompleted,
-      tap(() => {
+      tap((movie) => {
         this.subject$.next([...this.subject$.value, movie]);
       })
     );
@@ -76,5 +73,19 @@ export class MoviesService {
         this.subject$.next([...left, movie, ...right]);
       })
     );
+  }
+
+  mergeMoviesWithFavourites(
+    movies: (Movie | MovieWithFavourites)[],
+    favourites: string[]
+  ) {
+    return movies.map((movie) => ({
+      ...movie,
+      isAddedToFavourites: this.isMovieInFavourites(favourites, movie.id),
+    }));
+  }
+
+  isMovieInFavourites(favourites: string[], movieId: string): boolean {
+    return favourites.includes(movieId);
   }
 }
