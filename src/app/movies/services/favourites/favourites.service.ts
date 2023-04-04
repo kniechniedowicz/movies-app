@@ -15,7 +15,11 @@ export class FavouritesService {
 
   favourites$ = this.subject$.asObservable();
 
-  getFavourites(userId: string) {
+  getFavourites(): Favourite[] {
+    return this.subject$.value;
+  }
+
+  loadFavourites(userId: string) {
     this.http
       .get<Favourite[]>(
         `/api/favourites/${stringify({ userId }, { addQueryPrefix: true })}`
@@ -26,7 +30,7 @@ export class FavouritesService {
         }),
         catchError((error: HttpErrorResponse) => {
           console.error(
-            `FavouritesService getFavourites: ${error.error}`,
+            `FavouritesService loadFavourites: ${error.error}`,
             error
           );
           return of([]);

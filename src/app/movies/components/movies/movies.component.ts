@@ -28,7 +28,6 @@ export class MoviesComponent implements OnInit, OnDestroy {
   displayedColumns: string[] = ['title', 'rate', 'actions', 'favourites'];
   movies: MovieWithFavourites[] = [];
   selectedMovie: Movie | null = null;
-  favourites: string[] = [];
 
   ngOnInit(): void {
     this.activatedRoute.queryParams
@@ -50,7 +49,7 @@ export class MoviesComponent implements OnInit, OnDestroy {
             return;
           }
 
-          this.favouritesService.getFavourites(authData.user.id);
+          this.favouritesService.loadFavourites(authData.user.id);
         })
       )
       .subscribe();
@@ -58,11 +57,9 @@ export class MoviesComponent implements OnInit, OnDestroy {
     this.favouritesService.favourites$
       .pipe(
         takeUntil(this.notifier$),
-        map((favourites) => {
-          this.favourites = favourites.map((item) => item.movieId);
+        map(() => {
           this.movies = this.moviesService.mergeMoviesWithFavourites(
-            this.movies,
-            this.favourites
+            this.movies
           );
         })
       )
@@ -71,10 +68,7 @@ export class MoviesComponent implements OnInit, OnDestroy {
     this.moviesService.movies$
       .pipe(takeUntil(this.notifier$))
       .subscribe((movies) => {
-        this.movies = this.moviesService.mergeMoviesWithFavourites(
-          movies,
-          this.favourites
-        );
+        this.movies = this.moviesService.mergeMoviesWithFavourites(movies);
       });
 
     this.moviesService.params$

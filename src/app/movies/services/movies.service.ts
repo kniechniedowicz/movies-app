@@ -5,6 +5,7 @@ import { Movie, MovieWithFavourites } from '../../../typings/movie';
 import { LoaderService } from '../../core/services/loader/loader.service';
 import { QueryParams } from '../../../typings/query-params';
 import { stringify } from 'qs';
+import { FavouritesService } from './favourites/favourites.service';
 
 const DEFAULT_PARAMS: QueryParams = {
   _sort: 'rate',
@@ -16,7 +17,11 @@ const DEFAULT_PARAMS: QueryParams = {
   providedIn: 'root',
 })
 export class MoviesService {
-  constructor(private http: HttpClient, private loaderService: LoaderService) {}
+  constructor(
+    private http: HttpClient,
+    private loaderService: LoaderService,
+    private favouritesService: FavouritesService
+  ) {}
 
   private subject$ = new BehaviorSubject<Movie[]>([]);
 
@@ -75,17 +80,17 @@ export class MoviesService {
     );
   }
 
-  mergeMoviesWithFavourites(
-    movies: (Movie | MovieWithFavourites)[],
-    favourites: string[]
-  ) {
+  mergeMoviesWithFavourites(movies: (Movie | MovieWithFavourites)[]) {
     return movies.map((movie) => ({
       ...movie,
-      isAddedToFavourites: this.isMovieInFavourites(favourites, movie.id),
+      isAddedToFavourites: this.isMovieInFavourites(movie.id),
     }));
   }
 
-  isMovieInFavourites(favourites: string[], movieId: string): boolean {
-    return favourites.includes(movieId);
+  isMovieInFavourites(movieId: string): boolean {
+    return this.favouritesService
+      .getFavourites()
+      .map((item) => item.movieId)
+      .includes(movieId);
   }
 }
